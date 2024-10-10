@@ -84,7 +84,7 @@ header{
   height: 40rem;
   width: 40rem;
 }
-.add-to-cart{
+.add-to-cart, .checkout{
   border: none;
   width: 6rem;
   font-weight: bold;
@@ -92,7 +92,7 @@ header{
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
-.add-to-cart:hover{
+.add-to-cart:hover, .checkout:hover{
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   cursor: pointer;
   background-color: lightblue;
@@ -138,6 +138,12 @@ header{
   width: 400px;
   margin: 5rem;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  max-height: 60rem;
+}
+.modal--items{
+  max-height: 50rem;
+  overflow-y: auto;
+
 }
 li{
   display: flex;
@@ -148,3 +154,26 @@ li{
   width: 100vw;
   height: 100vh;
 }
+.cart--item{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.price--trash{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+#trash{
+  margin-right: 2rem;
+}
+
+#trash:hover{
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    color: rgb(0, 132, 255);
+}
+
+

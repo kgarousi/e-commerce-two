@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CartModal({ isOpen, setIsOpen, cart }) {
+function CartModal({ isOpen, setIsOpen, cart, setCart }) {
     if (!isOpen) return null;
 
     const handleOverlayClick = (event) => {
@@ -10,6 +10,13 @@ function CartModal({ isOpen, setIsOpen, cart }) {
         }
     };
 
+    function handleRemoveFromCart(index){
+            setCart(prevCart => {
+                const newCart = prevCart.filter((_, i) => i !== index);
+                return newCart;
+            })
+    }
+
     return (
         <div className="cart-modal" onClick={handleOverlayClick}>
             <div className="modal-content">
@@ -17,14 +24,25 @@ function CartModal({ isOpen, setIsOpen, cart }) {
                 {cart.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (
+                    <div className='modal--items'>
                     <ul>
                         {cart.map((item, index) => (
                             <li key={index}>
-                               <p style={{color:"grey"}}><strong>{item.name}</strong></p> <p>${(item.default_price.unit_amount / 100).toFixed(2)}</p>
+                                <div className='cart--item'>        
+                                    <div className='price--trash'>
+                                        <p style={{color:"grey"}}><strong>{item.name}</strong></p> 
+                                        <i id="trash" onClick={() => handleRemoveFromCart(index)} className="fa-solid fa-trash"></i>
+                                    </div>
+                                    <div>
+                                        <p>${(item.default_price.unit_amount / 100).toFixed(2)}</p>
+                                    </div>
+                                </div>
                             </li>
                         ))}
                     </ul>
+                </div>
                 )}
+                <button className='checkout' type="submit">Checkout</button>
             </div>
         </div>
     );
