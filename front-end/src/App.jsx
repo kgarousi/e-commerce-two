@@ -54,6 +54,7 @@ function App() {
                 <CartModal 
                     isOpen={isCartOpen} 
                     cart={cart} 
+                    setIsOpen={setIsCartOpen}
                 />
             </div>
         </Router>

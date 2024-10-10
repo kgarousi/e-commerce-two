@@ -118,26 +118,33 @@ header{
 .cart-modal {
   position: fixed;
   top: 0;
-  left: 1;
-  right: 0;
-  bottom: 2;
+  left: 0; /* Set to 0 for full width */
+  right: 0; /* Set to 0 for full width */
+  bottom: 0; /* Set to 0 for full height */
   background: none;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5rem;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0; /* Remove margin to cover the whole viewport */
   z-index: 1000; /* Ensure it's above other content */
   font-family: 'Roboto';
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
+
 
 .modal-content {
   background: white;
   border: 1px solid grey;
   padding: 20px;
   width: 400px;
+  margin: 5rem;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 li{
   display: flex;
   justify-content: space-between;
+}
+
+.cart-modal-overlay{
+  width: 100vw;
+  height: 100vh;
 }
