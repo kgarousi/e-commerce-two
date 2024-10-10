@@ -3,11 +3,12 @@ import ProductCards from './components/ProductCards'
 import Header from './components/Header'; // Optional: If you have a header component
 import ProductCard from './components/ProductCard';
 
+
 function App() {
     return (
         <Router>
-            <Header /> {/* Optional Header */}
             <div className="app-container">
+                <Header />
                 <Routes>
                     <Route path="/" element={<ProductCards />} />
                     <Route path="/product/:priceId" element={<ProductCard />} />
