@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 function CartModal({ isOpen, setIsOpen, cart, setCart }) {
+    const navigate = useNavigate()
     if (!isOpen) return null;
 
     const handleOverlayClick = (event) => {
@@ -16,6 +19,44 @@ function CartModal({ isOpen, setIsOpen, cart, setCart }) {
                 return newCart;
             })
     }
+
+
+    async function checkout() {
+            
+        const cartItems = cart.map(cartItem =>({
+            price: cartItem.default_price.id,
+            quantity: 1
+        }))
+
+        try {
+            // Send a POST request to the checkout API
+            const res = await fetch('http://localhost:5000/api/checkout', {
+                method: 'POST',
+                body: JSON.stringify({ cartItems }),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+    
+            // Check if the response is OK
+            if (!res.ok) {
+            throw new Error('Network response was not ok');
+            }
+    
+            // Parse the response JSON
+            const data = await res.json();
+            // Redirect to the checkout session URL
+            window.location.href = data.session.url; 
+            setIsOpen(false);
+
+        } catch (error) {
+            // Log any errors during the checkout process
+            console.error('Error during checkout:', error);
+        }
+
+    }
+
 
     return (
         <div className="cart-modal" onClick={handleOverlayClick}>
@@ -42,7 +83,7 @@ function CartModal({ isOpen, setIsOpen, cart, setCart }) {
                     </ul>
                 </div>
                 )}
-                <button className='checkout' type="submit">Checkout</button>
+                <button onClick={checkout} className='checkout' type="submit">Checkout</button>
             </div>
         </div>
     );
