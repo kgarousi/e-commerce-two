@@ -4,10 +4,11 @@ import Header from './components/Header';
 import ProductCard from './components/ProductCard';
 import CartModal from './components/CartModal';
 import { useState, useEffect } from 'react';
+import Cancel from './components/Cancel';
+import Success from './components/Success';
 
 function App() {
     const [cart, setCart] = useState(() => {
-        // Load cart from local storage on initial render
         const savedCart = localStorage.getItem('cart');
         return savedCart ? JSON.parse(savedCart) : [];
     });
@@ -15,42 +16,26 @@ function App() {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [products, setProducts] = useState([]);
 
-    const addToCart = (product) => {
-        setCart((prevCart) => {
-            const newCart = [...prevCart, product];
-            localStorage.setItem('cart', JSON.stringify(newCart)); // Save to local storage
-            return newCart;
-        });
-    };
-
-    const openCart = () => setIsCartOpen(!isCartOpen);
-
     const fetchProducts = async () => {
-        try {
-            const response = await fetch('http://localhost:5000/api/products');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            setProducts(data); // Set the fetched products
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
+        const response = await fetch('http://localhost:5000/api/products');
+        const data = await response.json();
+        setProducts(data);
     };
 
     useEffect(() => {
-        fetchProducts(); // Call the fetch function
+        fetchProducts();
     }, []);
 
     return (
         <Router>
             <div className="app-container">
-                <Header onOpenCart={openCart} cart={cart} />
+                <Header onOpenCart={() => setIsCartOpen(!isCartOpen)} cart={cart} />
                 <Routes>
                     <Route path="/" element={<ProductCards products={products} />} />
-                    <Route path="/product/:priceId" element={<ProductCard addToCart={addToCart} />} />
+                    <Route path="/product/:priceId" element={<ProductCard addToCart={(product) => setCart((prev) => [...prev, product])} />} />
+                    <Route path='/cancel' element={<Cancel />} />
+                    <Route path='/success' element={<Success/>} />
                 </Routes>
-
                 <CartModal 
                     isOpen={isCartOpen} 
                     cart={cart} 
@@ -63,5 +48,6 @@ function App() {
 }
 
 export default App;
+
 
 

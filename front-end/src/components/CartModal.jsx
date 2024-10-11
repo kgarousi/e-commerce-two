@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 function CartModal({ isOpen, setIsOpen, cart, setCart }) {
-    const navigate = useNavigate()
     if (!isOpen) return null;
 
     const handleOverlayClick = (event) => {
@@ -49,6 +48,7 @@ function CartModal({ isOpen, setIsOpen, cart, setCart }) {
             // Redirect to the checkout session URL
             window.location.href = data.session.url; 
             setIsOpen(false);
+
 
         } catch (error) {
             // Log any errors during the checkout process
