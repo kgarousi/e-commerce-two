@@ -29,7 +29,7 @@ app.get("/api/products", async (req, res) => {
     }
 });
 
-app.use(express.json()); // Add this line to parse JSON body
+app.use(express.json()); 
 
 app.post("/api/checkout", async (req, res) => {
     const body = req.body;
